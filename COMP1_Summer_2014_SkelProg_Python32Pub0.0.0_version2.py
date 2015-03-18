@@ -1,10 +1,11 @@
-# Skeleton Program code for the AQA COMP1 Summer 2014 examination
+  # Skeleton Program code for the AQA COMP1 Summer 2014 examination
 # this code should be used in conjunction with the Preliminary Material
 # written by the AQA Programmer Team
 # developed in the Python 3.2 programming environment
 # version 2 edited 06/03/2014
 
 import random
+from datetime import *
 
 NO_OF_RECENT_SCORES = 3
 
@@ -17,6 +18,7 @@ class TRecentScore():
   def __init__(self):
     self.Name = ''
     self.Score = 0
+    self.Date = ''
 
 Deck = [None]
 RecentScores = [None]
@@ -157,39 +159,44 @@ def ResetRecentScores(RecentScores):
   for Count in range(1, NO_OF_RECENT_SCORES + 1):
     RecentScores[Count].Name = ''
     RecentScores[Count].Score = 0
+    RecentScores[Count].Date = ''
 
 def DisplayRecentScores(RecentScores):
   print()
   print('Recent Scores: ')
   print()
-  print("{0:<8} {1:<8}".format("Name", "Score"))
-  print()
+  print("{0:<10}{1:<10}{2:<5}".format("Name", "Score", "Date"))
   for Count in range(1, NO_OF_RECENT_SCORES + 1):
-    print("{0:<8} {1:<8}".format(RecentScores[Count].Name, RecentScores[Count].Score)) 
+    print("{0:<10}{1:<10}{2:<5}".format(RecentScores[Count].Name, RecentScores[Count].Score, RecentScores[Count].Date))
   print()
   print('Press the Enter key to return to the main menu')
   input()
   print()
 
 def UpdateRecentScores(RecentScores, Score):
-  PlayerName = ""
-  while PlayerName == "":
+  name = input("Do you want to add your score to the high score table? (y or n): ")
+  decision = name.lower()[0]
+  if decision == "y":
     PlayerName = GetPlayerName()
-  FoundSpace = False
-  Count = 1
-  while (not FoundSpace) and (Count <= NO_OF_RECENT_SCORES):
-    if RecentScores[Count].Name == '':
-      FoundSpace = True
-    else:
-
-      Count = Count + 1
-  if not FoundSpace:
-    for Count in range(1, NO_OF_RECENT_SCORES):
-      RecentScores[Count].Name = RecentScores[Count + 1].Name
-      RecentScores[Count].Score = RecentScores[Count + 1].Score
-    Count = NO_OF_RECENT_SCORES
-  RecentScores[Count].Name = PlayerName
-  RecentScores[Count].Score = Score
+    FoundSpace = False
+    Count = 1
+    while (not FoundSpace) and (Count <= NO_OF_RECENT_SCORES):
+      if RecentScores[Count].Name == '':
+        FoundSpace = True
+      else:
+        Count = Count + 1
+    if not FoundSpace:
+      for Count in range(1, NO_OF_RECENT_SCORES):
+        RecentScores[Count].Name = RecentScores[Count + 1].Name
+        RecentScores[Count].Score = RecentScores[Count + 1].Score
+      Count = NO_OF_RECENT_SCORES
+    RecentScores[Count].Name = PlayerName
+    RecentScores[Count].Score = Score
+    current_date = datetime.strftime(datetime.now(), "%d-%m-%Y")
+    RecentScores[Count].Date = current_date
+  else:
+    print()
+    print("Score not saved")
 
 def PlayGame(Deck, RecentScores):
   LastCard = TCard()
