@@ -9,6 +9,7 @@ from datetime import *
 
 NO_OF_RECENT_SCORES = 3
 
+
 class TCard():
   def __init__(self):
     self.Suit = 0
@@ -74,8 +75,11 @@ def DisplayMenu():
   print('2. Play game (without shuffle)')
   print('3. Display recent scores')
   print('4. Reset recent scores')
+  print('5. Options')
   print()
   print('Select an option from the menu (or enter q to quit): ', end='')
+
+
 
 def GetMenuChoice():
   Choice = input()
@@ -83,6 +87,27 @@ def GetMenuChoice():
   print()
   return Choice
 
+def DisplayOptions():
+    print()
+    print('1. Set Ace to be HIGH or LOW')
+    print()
+    print('Select an option from the menu (or enter q to quit): ', end='')
+
+def GetOptionChoice():
+    OptionChoice  = input()
+    return OptionChoice
+
+def SetOptions(OptionChoice):
+    if OptionChoice == 1:
+        SetAceHighOrLow()
+  
+def SetAceHighOrLow():
+    acevalue = input('Do you want the Ace to be (h)igh or (l)ow?: ')
+
+def BubbleSortScores(RecentScores):
+  
+
+    
 def LoadDeck(Deck):
   CurrentFile = open('deck.txt', 'r')
   Count = 1
@@ -246,3 +271,5 @@ if __name__ == '__main__':
       DisplayRecentScores(RecentScores)
     elif Choice == '4':
       ResetRecentScores(RecentScores)
+    elif Choice == '5':
+      DisplayOptions()
