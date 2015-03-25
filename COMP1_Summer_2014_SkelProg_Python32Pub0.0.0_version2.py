@@ -105,7 +105,7 @@ def SetAceHighOrLow():
     acevalue = input('Do you want the Ace to be (h)igh or (l)ow?: ')
 
 def BubbleSortScores(RecentScores):
-  
+  pass
 
     
 def LoadDeck(Deck):
