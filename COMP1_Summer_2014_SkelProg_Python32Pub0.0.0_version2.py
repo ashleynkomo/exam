@@ -88,25 +88,42 @@ def GetMenuChoice():
   return Choice
 
 def DisplayOptions():
-    print()
-    print('1. Set Ace to be HIGH or LOW')
-    print()
-    print('Select an option from the menu (or enter q to quit): ', end='')
+  print()
+  print('1. Set Ace to be HIGH or LOW')
+  print()
+  print('Select an option from the menu (or enter q to quit): ')
 
 def GetOptionChoice():
+  OptionChoice = ""
+  while OptionChoice == "":
     OptionChoice  = input()
-    return OptionChoice
+  return OptionChoice.lower()[0]
+  
 
 def SetOptions(OptionChoice):
-    if OptionChoice == 1:
+    if OptionChoice == 'q':
+      print()
+    if OptionChoice == '1':
         SetAceHighOrLow()
   
 def SetAceHighOrLow():
-    acevalue = input('Do you want the Ace to be (h)igh or (l)ow?: ')
+    global AceValue
+    AceValue = input('Do you want the Ace to be (h)igh or (l)ow?: ')
+    AceValue = AceValue.lower()[0]
 
 def BubbleSortScores(RecentScores):
-  pass
-
+  end = True
+  ScoresLength = len(RecentScores)
+  while end == True:
+    ScoresLength = ScoresLength - 1
+    end = False
+    for item in range(1,ScoresLength-1):
+      if RecentScores[item].Score < RecentScores[item+1].Score:
+        PlaceHolder = RecentScores[item+1]
+        RecentScores[item+1] = RecentScores[item]
+        RecentScores[item] = PlaceHolder
+        end = True
+      
     
 def LoadDeck(Deck):
   CurrentFile = open('deck.txt', 'r')
@@ -151,6 +168,10 @@ def GetCard(ThisCard, Deck, NoOfCardsTurnedOver):
 
 def IsNextCardHigher(LastCard, NextCard):
   Higher = False
+  if NextCard.Rank == 1 and AceValue == 'h':
+    NextCard.Rank = 14
+  if LastCard.Rank == 1 and AceValue == 'n':
+    LastCard.Rank = 14
   if NextCard.Rank > LastCard.Rank:
     Higher = True
   return Higher
@@ -268,8 +289,11 @@ if __name__ == '__main__':
       LoadDeck(Deck)
       PlayGame(Deck, RecentScores)
     elif Choice == '3':
+      BubbleSortScores(RecentScores)
       DisplayRecentScores(RecentScores)
     elif Choice == '4':
       ResetRecentScores(RecentScores)
     elif Choice == '5':
       DisplayOptions()
+      OptionChoice = GetOptionChoice()
+      SetOptions(OptionChoice)
