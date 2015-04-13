@@ -76,9 +76,9 @@ def DisplayMenu():
   print('3. Display recent scores')
   print('4. Reset recent scores')
   print('5. Options')
+  print('6. Save high scores')
   print()
   print('Select an option from the menu (or enter q to quit): ', end='')
-
 
 
 def GetMenuChoice():
@@ -107,9 +107,19 @@ def SetOptions(OptionChoice):
         SetAceHighOrLow()
   
 def SetAceHighOrLow():
-    global AceValue
-    AceValue = input('Do you want the Ace to be (h)igh or (l)ow?: ')
+  global ACE_HIGH
+  valid = False
+  while not valid:
+    AceValue = input("Do you want the Ace to be (h)igh or (l)ow: ")
     AceValue = AceValue.lower()[0]
+    if AceValue in ["h" or "l"]:
+      valid = True
+    else:
+      print("Please enter a valid choice")
+    if AceValue == "h":
+      ACE_HIGH = True
+    else:
+      ACE_HIGH = Fals
 
 def BubbleSortScores(RecentScores):
   end = True
@@ -123,6 +133,8 @@ def BubbleSortScores(RecentScores):
         RecentScores[item+1] = RecentScores[item]
         RecentScores[item] = PlaceHolder
         end = True
+
+        
       
     
 def LoadDeck(Deck):
@@ -167,11 +179,15 @@ def GetCard(ThisCard, Deck, NoOfCardsTurnedOver):
 
 
 def IsNextCardHigher(LastCard, NextCard):
-  Higher = False
-  if NextCard.Rank == 1 and AceValue == 'h':
+  if ACE_HIGH and NextCard.Rank == 1:
     NextCard.Rank = 14
-  if LastCard.Rank == 1 and AceValue == 'n':
+  if ACE_HIGH and LastCard.Rank == 1:
     LastCard.Rank = 14
+  if not ACE_HIGH and NextCard.Rank == 14:
+    NextCard.Rank = 1
+  if not ACE_HIGH and LastCard.Rank == 14:
+    LastCard.Rank = 1
+  Higher = False
   if NextCard.Rank > LastCard.Rank:
     Higher = True
   return Higher
