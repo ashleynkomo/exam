@@ -15,15 +15,15 @@ def display_menu():
   print("5. Settings")
   print("6. Quit program")
   print()
-  print("Please select an option: ")
+
 
 def get_menu_selection():
-  menu_choice = input()
+  menu_choice = int(input("Please select an option from the menu: "))
   menu_choice = menu_choice.lower()[0]
   print()
   return menu_choice
  
-def make_selection():
+def make_selection(menu_choice):
   if menu_choice == 1:
     play_game()
   if menu_choice == 2:
@@ -326,7 +326,9 @@ def GetPieceName(Board, StartRank, StartFile, FinishRank, FinishFile,WhoseTurn):
 
 if __name__ == "__main__":
   display_menu()
-  make_selection() = get_menu_selection()
+  menu_choice = get_menu_selection()
+  make_selection(menu_choice)
+  #Play game function goes here
   Board = CreateBoard() #0th index not used
   StartSquare = 0 
   FinishSquare = 0
@@ -337,7 +339,7 @@ if __name__ == "__main__":
     SampleGame = GetTypeOfGame()
     if ord(SampleGame) >= 97 and ord(SampleGame) <= 122:
       SampleGame = chr(ord(SampleGame) - 32)
-
+      
     InitialiseBoard(Board, SampleGame)
     while not(GameOver):
       DisplayBoard(Board)
@@ -366,3 +368,4 @@ if __name__ == "__main__":
     PlayAgain = input("Do you want to play again (enter Y for Yes)? ")
     if ord(PlayAgain) >= 97 and ord(PlayAgain) <= 122:
       PlayAgain = chr(ord(PlayAgain) - 32)
+# refactoring is the process of making a piece of code more efficient and easier to understand.
