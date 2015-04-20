@@ -36,7 +36,34 @@ def make_selection(menu_choice, play_game):
     print("5")
   if menu_choice == 6:
     print("6")
-  
+
+
+def in_game_menu():
+  print()
+  print("Options")
+  print()
+  print("1. Save Game")
+  print("2. Quit to Menu")
+  print("3. Return to Game")
+  print()
+  print("Please select an option: ")
+  valid = False
+  while not valid:
+    option = int(input("Please select an option: "))
+    if option == 1:
+      print("Game Saved")
+    elif option == 2:
+      print("Game Quitted")
+      display_menu()
+      selection = get_menu_selection
+    elif option == 3:
+      print("return to game")
+      print()
+      valid = True
+    else:
+      print("Please select a valid option: ")
+      valid = True
+      
 def CreateBoard():
   Board = []
   for Count in range(BOARDDIMENSION + 1):
