@@ -146,11 +146,23 @@ def CheckGisgigirMoveIsLegal(Board, StartRank, StartFile, FinishRank, FinishFile
           GisgigirMoveIsLegal = False
   return GisgigirMoveIsLegal
 
-def CheckNabuMoveIsLegal(Board, StartRank, StartFile, FinishRank, FinishFile): 
+def CheckNabuMoveIsLegal(Board, StartRank, StartFile, FinishRank, FinishFile):
   CheckNabuMoveIsLegal = False
-  if abs(FinishFile - StartFile) == abs(FinishRank - StartRank) :
+  if abs(FinishFile - StartFile) == abs(FinishRank - StartRank):
     CheckNabuMoveIsLegal = True
-  return CheckNabuMoveIsLegal #Really hard
+  Change = FinishRank - StartRank #Create new variable for calculating the difference
+  if Change >= 1:
+    CheckNabuMoveIsLegal = True
+    for Count in range(1, Change):
+      if Board[StartRank + Count][StartFile + Count] != "  ":
+        CheckNabuMoveIsLegal = False
+  elif Change <= -1:
+    CheckNabuMoveIsLegal = True
+    for Count in range(-1, Change, -1):
+      if Board[StartRank + Count][StartFile + Count] != "  ":
+        CheckNabuMoveIsLegal = False
+  
+  return CheckNabuMoveIsLegal
 
 def CheckMarzazPaniMoveIsLegal(Board, StartRank, StartFile, FinishRank, FinishFile):#abs means Return the absolute value of a number
   CheckMarzazPaniMoveIsLegal = False
@@ -161,7 +173,7 @@ def CheckMarzazPaniMoveIsLegal(Board, StartRank, StartFile, FinishRank, FinishFi
 
 def CheckEtluMoveIsLegal(Board, StartRank, StartFile, FinishRank, FinishFile): 
   CheckEtluMoveIsLegal = False
-  if (abs(FinishFile - StartFile) == 2 and abs(FinishRank - StartRank) == 0) or (abs(FinishFile - StartFile) == 0 and abs(FinishRank - StartRank) == 2):
+  if (abs(FinishFile - StartFile) == 2 and abs(FinishRank - StartRank) == 1) or (abs(FinishFile - StartFile) == 1 and abs(FinishRank - StartRank) == 2):#Changed 0 to 1
     CheckEtluMoveIsLegal = True
   return CheckEtluMoveIsLegal
 
@@ -205,8 +217,13 @@ def CheckMoveIsLegal(Board, StartRank, StartFile, FinishRank, FinishFile, WhoseT
     MoveIsLegal = False
   return MoveIsLegal
 
-def InitialiseBoard(Board, SampleGame): 
-  if SampleGame == "Y":
+def InitialiseBoard(Board, SampleGame):
+    if SampleGame == "Y":
+        InitialiseSampleBoard(Board)
+    else:
+        InitialiseNewBoard(Board)
+        
+def InitialiseSampleBoard(Board):
     for RankNo in range(1, BOARDDIMENSION + 1):
       for FileNo in range(1, BOARDDIMENSION + 1):
         Board[RankNo][FileNo] = "  "
@@ -218,7 +235,8 @@ def InitialiseBoard(Board, SampleGame):
     Board[3][2] = "BE"
     Board[3][8] = "BE"
     Board[6][8] = "BR"
-  else:
+    
+def InitialiseNewBoard(Board):
     for RankNo in range(1, BOARDDIMENSION + 1):
       for FileNo in range(1, BOARDDIMENSION + 1):
         if RankNo == 2:
@@ -241,7 +259,7 @@ def InitialiseBoard(Board, SampleGame):
           elif FileNo == 5:
             Board[RankNo][FileNo] = Board[RankNo][FileNo] + "S"
         else:
-          Board[RankNo][FileNo] = "  "    
+          Board[RankNo][FileNo] = "  "   
                     
 def GetMove(StartSquare, FinishSquare): 
   try:
