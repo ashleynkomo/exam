@@ -153,14 +153,18 @@ def CheckNabuMoveIsLegal(Board, StartRank, StartFile, FinishRank, FinishFile):
   Change = FinishRank - StartRank #Create new variable for calculating the difference
   if Change >= 1:
     CheckNabuMoveIsLegal = True
-    for Count in range(1, Change):
+    Count = 1
+    while count != Change:
       if Board[StartRank + Count][StartFile + Count] != "  ":
         CheckNabuMoveIsLegal = False
+      Count += 1
   elif Change <= -1:
     CheckNabuMoveIsLegal = True
-    for Count in range(-1, Change, -1):
+    Count = -1
+    while Count != Difference:
       if Board[StartRank + Count][StartFile + Count] != "  ":
         CheckNabuMoveIsLegal = False
+    
   
   return CheckNabuMoveIsLegal
 
@@ -261,7 +265,7 @@ def InitialiseNewBoard(Board):
         else:
           Board[RankNo][FileNo] = "  "   
                     
-def GetMove(StartSquare, FinishSquare): 
+def GetMove(StartSquare, FinishSquare, WhoseTurn): 
   try:
     Confirmed = False
     Surrender = False
@@ -401,13 +405,13 @@ def play_game(SampleGame):
     DisplayBoard(Board)
     DisplayWhoseTurnItIs(WhoseTurn)
     MoveIsLegal = False
+    skip = False
     while not(MoveIsLegal):
-      Confirmed = False
-      while not Confirmed:
-        StartSquare, FinishSquare, Quit = GetMove(StartSquare, FinishSquare)
-        if Quit == True:
-          return 
-        Confirmed = ConfirmMove(StartSquare,FinishSquare)
+      StartSquare, FinishSquare  = GetMove(StartSquare, FinishSquare, WhoseTurn)
+      if Quit == True:
+        return 
+      Confirmed = ConfirmMove(StartSquare,FinishSquare)
+      if Confirmed == "y":
         StartRank = StartSquare % 10
         StartFile = StartSquare // 10
         FinishRank = FinishSquare % 10
