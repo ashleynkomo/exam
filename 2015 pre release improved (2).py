@@ -101,43 +101,39 @@ def CheckGisgigirMoveIsLegal(Board, StartRank, StartFile, FinishRank, FinishFile
           GisgigirMoveIsLegal = False
   return GisgigirMoveIsLegal
 
+##def CheckNabuMoveIsLegal(Board, StartRank, StartFile, FinishRank, FinishFile):
+##  CheckNabuMoveIsLegal = False
+##  if abs(FinishFile - StartFile) == 1 and abs(FinishRank - StartRank) == 1:
+##    CheckNabuMoveIsLegal = True
+##  return CheckNabuMoveIsLegal
 
-def CheckNabuMoveIsLegal(Board, StartRank, StartFile, FinishRank, FinishFile):
+def CheckNabuMoveIsLegal(Board, StartRank, StartFile, FinishRank, FinishFile, WhoseTurn):
   CheckNabuMoveIsLegal = False
   if abs(FinishFile - StartFile) == abs(FinishRank - StartRank):
     CheckNabuMoveIsLegal = True
-  RankDifference = StartRank - FinishRank
-  FileDifference = StartFile - FinishFile
-  if RankDifference > 0 and FileDifference > 0:
-    CheckNabuMoveIsLegal = True
-    Count = 1
-    while Count != RankDifference:
-      if Board[StartRank - Count][StartFile - Count] != " ":
-        CheckNabuMoveIsLegal = False
-        Count += 1 
-  if RankDifference > 0 and FileDifference < 0:
-    CheckNabuMoveIsLegal = True
-    Count = 1
-    while Count != RankDifference:
-      if Board[StartRank - Count][StartFile + Count] != " ":
-        CheckNabuMoveIsLegal = False
-        Count += 1   
-  if RankDifference < 0 and FileDifference > 0:
-    CheckNabuMoveIsLegal = True
-    Count = -1
-    while Count != RankDifference:
-      if Board[StartRank - Count][StartFile + Count] != " ":
-        CheckNabuMoveIsLegal = False
-        Count -= 1
-  if RankDifference < 0 and FileDifference < 0:
-    CheckNabuMoveIsLegal = True
-    Count = -1
-    while Count != RankDifference:
-      if Board[StartRank - Count][StartFile-+ Count] != " ":
-        CheckNabuMoveIsLegal = False
-        Count -= 1
+##  valid = False
+##  TempRank = FinishRank
+##  TempFile = FinishFile
+##  while not valid:
+##    if Board[TempRank-1][TempFile-1]!= "  ":
+##      CheckNabuMoveIsLegal = False
+##      valid = True
+##    elif Board[TempRank-2][TempFile-2]!= "  ":
+##      CheckNabuMoveIsLegal = False
+##      valid = True
+##    elif Board[TempRank-3][TempFile-3]!= "  ":
+##      CheckNabuMoveIsLegal = False
+##      valid = True
+##    else:
+##      CheckNabuMoveIsLegal = True
+##      valid = True
   return CheckNabuMoveIsLegal
 
+##def CheckMarzazPaniMoveIsLegal(Board, StartRank, StartFile, FinishRank, FinishFile):
+##  CheckMarzazPaniMoveIsLegal = False
+##  if (abs(FinishFile - StartFile) == 1 and abs(FinishRank - StartRank) == 0) or (abs(FinishFile - StartFile) == 0 and abs(FinishRank - StartRank) ==1):
+##    CheckMarzazPaniMoveIsLegal = True
+##  return CheckMarzazPaniMoveIsLegal
 
 def CheckMarzazPaniMoveIsLegal(Board, StartRank, StartFile, FinishRank, FinishFile):
   CheckMarzazPaniMoveIsLegal = False
@@ -145,6 +141,11 @@ def CheckMarzazPaniMoveIsLegal(Board, StartRank, StartFile, FinishRank, FinishFi
     CheckMarzazPaniMoveIsLegal = True
   return CheckMarzazPaniMoveIsLegal
 
+##def CheckEtluMoveIsLegal(Board, StartRank, StartFile, FinishRank, FinishFile):
+##  CheckEtluMoveIsLegal = False
+##  if (abs(FinishFile - StartFile) == 2 and abs(FinishRank - StartRank) == 0) or (abs(FinishFile - StartFile) == 0 and abs(FinishRank - StartRank) == 2):
+##    CheckEtluMoveIsLegal = True
+##  return CheckEtluMoveIsLegal
 
 def CheckEtluMoveIsLegal(Board, StartRank, StartFile, FinishRank, FinishFile):
   CheckEtluMoveIsLegal = False
@@ -180,8 +181,7 @@ def CheckMoveIsLegal(Board, StartRank, StartFile, FinishRank, FinishFile, WhoseT
           elif PieceType == "G":
             MoveIsLegal = CheckGisgigirMoveIsLegal(Board, StartRank, StartFile, FinishRank, FinishFile)
           elif PieceType == "N":
-            MoveIsLegal = CheckNabuMoveIsLegal(Board, StartRank, StartFile, FinishRank, FinishFile
-                                               )
+            MoveIsLegal = CheckNabuMoveIsLegal(Board, StartRank, StartFile, FinishRank, FinishFile, WhoseTurn)
           elif PieceType == "E":
             MoveIsLegal = CheckEtluMoveIsLegal(Board, StartRank, StartFile, FinishRank, FinishFile)
   except IndexError:
@@ -466,6 +466,7 @@ def play_game(SampleGame):
     PlayAgain = input("Do you want to play again (enter Y for Yes)? ")
     if ord(PlayAgain) >= 97 and ord(PlayAgain) <= 122:
       PlayAgain = chr(ord(PlayAgain) - 32)
+
 
 
 if __name__ == "__main__":
