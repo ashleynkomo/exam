@@ -106,36 +106,36 @@ def CheckNabuMoveIsLegal(Board, StartRank, StartFile, FinishRank, FinishFile):
   CheckNabuMoveIsLegal = False
   if abs(FinishFile - StartFile) == abs(FinishRank - StartRank):
     CheckNabuMoveIsLegal = True
-  RankDifference = StartRank - FinishRank
-  FileDifference = StartFile - FinishFile
-  if RankDifference > 0 and FileDifference > 0:
+  RankDifference = StartRank - FinishRank #difference between the ranks(vertically), number of spaces moved
+  FileDifference = StartFile - FinishFile #difference between the files (horizontally)
+  if RankDifference > 0 and FileDifference > 0: 
     CheckNabuMoveIsLegal = True
     Count = 1
     while Count != RankDifference:
-      if Board[StartRank - Count][StartFile - Count] != " ":
-        CheckNabuMoveIsLegal = False
-        Count += 1 
+      if Board[StartRank - Count][StartFile - Count] != "  ":#going through all pieces passed to make sure its blank
+        CheckNabuMoveIsLegal = False #If its false it means there is a piece in front which wont allow you to jump over it
+      Count += 1
   if RankDifference > 0 and FileDifference < 0:
     CheckNabuMoveIsLegal = True
     Count = 1
     while Count != RankDifference:
-      if Board[StartRank - Count][StartFile + Count] != " ":
+      if Board[StartRank - Count][StartFile + Count] != "  ":#repeats throughout for all the different directions
         CheckNabuMoveIsLegal = False
-        Count += 1   
+      Count += 1
   if RankDifference < 0 and FileDifference > 0:
     CheckNabuMoveIsLegal = True
-    Count = -1
+    Count = -1 #These are for the moves going down the board
     while Count != RankDifference:
-      if Board[StartRank - Count][StartFile + Count] != " ":
+      if Board[StartRank - Count][StartFile + Count] != "  ":
         CheckNabuMoveIsLegal = False
-        Count -= 1
+      Count -= 1
   if RankDifference < 0 and FileDifference < 0:
     CheckNabuMoveIsLegal = True
     Count = -1
     while Count != RankDifference:
-      if Board[StartRank - Count][StartFile-+ Count] != " ":
+      if Board[StartRank - Count][StartFile-+ Count] != "  ":
         CheckNabuMoveIsLegal = False
-        Count -= 1
+      Count -= 1
   return CheckNabuMoveIsLegal
 
 
