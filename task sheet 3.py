@@ -37,7 +37,6 @@ def CheckIfGameWillBeWon(Board, FinishRank, FinishFile):
     return False
 
 
-
 def DisplayBoard(Board):
   print()
   for RankNo in range(1, BOARDDIMENSION + 1):
@@ -54,12 +53,29 @@ def DisplayBoard(Board):
 
 def CheckRedumMoveIsLegal(Board, StartRank, StartFile, FinishRank, FinishFile, ColourOfPiece):
   CheckRedumMoveIsLegal = False
-  if ColourOfPiece == "W":
-    if FinishRank == StartRank - 1:
+  RankDifference = FinishRank - StartRank
+  FileDifference = FinishFile - StartFile
+  if FileDifference != 0:
+    checkRedumMoveIsLegal = False
+  elif ColourOfPiece == "W":
+    if RankDifference == -2:
+      CheckRedumMoveIsLegal = True
+      if StartRank != 7:
+        CheckRedumMoveIsLegal = False
+    elif StartRank == 7:
+      CheckRedumMoveIsLegal = True
+    elif FinishRank == StartRank - 1:
       if FinishFile == StartFile and Board[FinishRank][FinishFile] == "  ":
         CheckRedumMoveIsLegal = True
       elif abs(FinishFile - StartFile) == 1 and Board[FinishRank][FinishFile][0] == "B":
         CheckRedumMoveIsLegal = True
+  elif ColourOfPiece == "B":
+    if RankDifference == 2:
+      CheckRedumMoveIsLegal = True
+      if StartRank != 2:
+        CheckRedumMoveIsLegal = False
+    if StartRank == 2:
+      CheckRedumMoveIsLegal = True
   elif FinishRank == StartRank + 1:
     if FinishFile == StartFile and Board[FinishRank][FinishFile] == "  ":
       CheckRedumMoveIsLegal = True
@@ -190,7 +206,6 @@ def CheckMoveIsLegal(Board, StartRank, StartFile, FinishRank, FinishFile, WhoseT
 
 
 
-
 def InitialiseBoard(Board, SampleGame):
     if SampleGame == "Y":
         InitialiseSampleBoard(Board)
@@ -289,18 +304,6 @@ def GetMove(StartSquare, FinishSquare, Exit, Surrender):
   return StartSquare, FinishSquare, Exit, Surrender
 
 
-
-def in_game_menu():
-  print()
-  print("Options")
-  print()
-  print("1. Save Game")
-  print("2. Quit to Menu")
-  print("3. Return to Game")
-  print("4. Surrender")
-  print()
-  option = int(input("Please select an option: "))
-  return option
     
 
 
@@ -394,7 +397,21 @@ def display_menu():
   print('5. Settings')
   print('6. Quit program')
   print()
-  
+
+
+def in_game_menu():
+  print()
+  print("Options")
+  print()
+  print("1. Save Game")
+  print("2. Quit to Menu")
+  print("3. Return to Game")
+  print("4. Surrender")
+  print()
+  option = int(input("Please select an option: "))
+  return option
+
+
 def get_menu_selection():
   valid = False
   while not valid:
@@ -420,19 +437,22 @@ def make_selection(option_selected):
   else:
     print("Program End")
 
-
-def settings():
+def settingsMenu():
   print()
-  print("1. Use Kashshaptu Piece")
+  print("1. Use Kashaptu Piece")
   print("9. Return to Main Menu")
-  option = int(input("Please select setting to change: "))
-  
 
-def settings_choice(option, slelection):
-  if selection == "y":
-    print("Kashshaptu Activated")
-  elif selection == "n":
-    pass
+def settingsChoice():
+  print()
+  Choice = input("Please Select setting to change: ")
+  if Choice == "1":
+    global Kashshaptu
+    Kashshaptu = input("Do you wish to use the Kashaptu piece (Y/N)? ").lower()[0]
+    if Kashshaptu == "y":
+      print("Kashshaptu Activated!")
+    else:
+      print("Kashshaptu Deactivated!")
+
     
 
 def play_game(SampleGame):
