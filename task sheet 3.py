@@ -3,7 +3,20 @@
 # written by the AQA COMP1 Programmer Team
 # developed in the Python 3.4 programming environment
 
+from datetime import *
+
+
+
+class TRecentScore():
+  def __init__(self):
+    self.Name = ' '
+    self.Colour = ' ' 
+    self.NumberOfMoves = 0
+    self.Date = ' '
+
+RecentScores = [None]
 BOARDDIMENSION = 8
+NO_OF_SCORES = 3
 
 def CreateBoard():
   Board = []
@@ -117,7 +130,11 @@ def CheckGisgigirMoveIsLegal(Board, StartRank, StartFile, FinishRank, FinishFile
           GisgigirMoveIsLegal = False
   return GisgigirMoveIsLegal
 
+def CheckKashshpatuMoveIsLegal(Board, StartRank, StartFile, FinishRank, FinishFile):
 
+  pass
+
+  
 def CheckNabuMoveIsLegal(Board, StartRank, StartFile, FinishRank, FinishFile):
   CheckNabuMoveIsLegal = False
   if abs(FinishFile - StartFile) == abs(FinishRank - StartRank):
@@ -196,10 +213,12 @@ def CheckMoveIsLegal(Board, StartRank, StartFile, FinishRank, FinishFile, WhoseT
           elif PieceType == "G":
             MoveIsLegal = CheckGisgigirMoveIsLegal(Board, StartRank, StartFile, FinishRank, FinishFile)
           elif PieceType == "N":
-            MoveIsLegal = CheckNabuMoveIsLegal(Board, StartRank, StartFile, FinishRank, FinishFile
-                                               )
+            MoveIsLegal = CheckNabuMoveIsLegal(Board, StartRank, StartFile, FinishRank, FinishFile)
           elif PieceType == "E":
             MoveIsLegal = CheckEtluMoveIsLegal(Board, StartRank, StartFile, FinishRank, FinishFile)
+          elif PieceType == "K":
+            MoveIsLegal = CheckKashshpatuMoveIsLegal(Board, StartRank, StartFile, FinishRank, FinishFile)
+            
   except IndexError:
       MoveIsLegal = False
   return MoveIsLegal
@@ -431,30 +450,56 @@ def make_selection(option_selected):
   elif selection == "3":
     SampleGame = "Y"
     play_game(SampleGame)
+  elif selection == "4":
+    display_high_scores(RecentScores)
   elif selection == "5":
-    settings()
+    settingsMenu()
     settings_choice()
   else:
     print("Program End")
 
 def settingsMenu():
   print()
-  print("1. Use Kashaptu Piece")
+  print("1. Do you wish to use Kashaptu Piece")
   print("9. Return to Main Menu")
 
-def settingsChoice():
+def settings_choice():
   print()
-  Choice = input("Please Select setting to change: ")
-  if Choice == "1":
-    global Kashshaptu
-    Kashshaptu = input("Do you wish to use the Kashaptu piece (Y/N)? ").lower()[0]
-    if Kashshaptu == "y":
-      print("Kashshaptu Activated!")
-    else:
-      print("Kashshaptu Deactivated!")
-
+  choice = input("Please Select setting to change: ")
+  if choice == "1":
+    print("Kashshpatu Activated")
+  elif choice == "9":
+    print()
+    print("Returning to the Game...")
     
+    
+def display_high_scores(RecentScores):
+  print()
+  print('High Scores: ')
+  print()
+  print("{0:<10}{1:<10}{2:<5}".format("Name", "Score","Number of Moves", "Date"))
+  for Count in range(1, NO_OF_SCORES + 1):
+    print("{0:<10}{1:<10}{2:<5}".format(RecentScores[Count].Name, RecentScores[Count].Score, RecentScores[Count].Date))
+  print()
+  print('Press the Enter key to return to the main menu')
+  input()
+  print()
 
+
+##def save_high_scores(scores):
+##  pass
+##
+##def load_high_scores():
+##  pass
+##
+##def save_board_state():
+##  pass
+##
+##def load_board_state():
+##  pass
+
+
+  
 def play_game(SampleGame):
   Board = CreateBoard() #0th index not used
   StartSquare = 0 
